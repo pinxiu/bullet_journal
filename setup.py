@@ -11,7 +11,7 @@ setup(
     author = 'Pinxiu Gong',
     author_email = 'pinxiu.gong@gmail.com',
     url = 'https://github.com/pinxiu/bullet_journal',
-    download_url = 'https://github.com/pinxiu/bullet_journal/archive/v_01.tar.gz',
+    download_url = 'https://github.com/pinxiu/bullet_journal/archive/v_03.tar.gz',
     keywords = ['bullet', 'journal', 'toolkit', 'command line'],
     install_requires=[
         'validators',
