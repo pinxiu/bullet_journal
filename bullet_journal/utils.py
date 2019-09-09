@@ -51,7 +51,11 @@ def read_file(directory, file_name):
 def move_file(directory_src, directory_dst, file_name):
     src = f'{directory_src}/{file_name}'
     dst = f'{directory_dst}/{file_name}'
-    os.rename(src, dst) 
+    os.rename(src, dst)
+
+
+def remove_file(directory, file_name):
+    os.remove(f'{directory}/{file_name}')
 
 
 def random_string(string_length=32):

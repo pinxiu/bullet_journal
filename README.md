@@ -22,6 +22,13 @@ date: optional argument in the format of yyyy_mm_dd
       default is today
 ```
 
+### Delete to-do task
+```
+bj delete [date]
+date: optional argument in the format of yyyy_mm_dd
+      default is today
+```
+
 ### Close to-do task
 ```
 bj close [date]

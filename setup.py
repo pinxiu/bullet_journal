@@ -11,7 +11,7 @@ setup(
     author = 'Pinxiu Gong',
     author_email = 'pinxiu.gong@gmail.com',
     url = 'https://github.com/pinxiu/bullet_journal',
-    download_url = 'https://github.com/pinxiu/bullet_journal/archive/v_03.tar.gz',
+    download_url = 'https://github.com/pinxiu/bullet_journal/archive/v_06.tar.gz',
     keywords = ['bullet', 'journal', 'toolkit', 'command line'],
     install_requires=[
         'validators',
@@ -32,6 +32,7 @@ setup(
         'bullet_journal.registered_commands': [
             'add = bullet_journal.commands.add:main',
             'close = bullet_journal.commands.close:main',
+            'delete = bullet_journal.commands.delete:main',
             'migrate = bullet_journal.commands.migrate:main',
             'daily_log = bullet_journal.commands.daily_log:main',
         ],
