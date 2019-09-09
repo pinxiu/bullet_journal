@@ -7,6 +7,7 @@ from bullet_journal import utils
 
 
 def add(date):
+    utils.is_valid_date(date)
     directory = f'resources/{date}/add'
     utils.ensure_directory(directory)
     content = input(f"Add item to {date}: ")

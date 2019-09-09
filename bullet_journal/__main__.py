@@ -22,7 +22,7 @@ def dispatch(argv):
     parser.add_argument(
         "--version",
         action="version",
-        version="%(prog)s version {}".format(
+        version="Bullet Journal Version {}".format(
             bullet_journal.__version__,
         ),
     )

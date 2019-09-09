@@ -7,6 +7,7 @@ from bullet_journal import utils
 
 
 def migrate(date):
+    utils.is_valid_date(date)
     directory_add = f'resources/{date}/add'
     directory_migrate = f'resources/{date}/migrate'
     utils.ensure_directory(directory_add)
@@ -33,6 +34,7 @@ def migrate(date):
     dst_date = input(f"Date to move item to [yyyy_mm_dd] (default {utils.tomorrow()}):")
     if not utils.is_valid_date(dst_date):
         dst_date = utils.tomorrow()
+        print(f"Migrated item to default date: {dst_date}")
     directory_dst = f'resources/{dst_date}/add'
     utils.ensure_directory(directory_dst)
     utils.write_file(directory_dst, utils.read_file(directory_migrate, file_name))

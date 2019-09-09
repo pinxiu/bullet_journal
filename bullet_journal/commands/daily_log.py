@@ -7,6 +7,7 @@ from bullet_journal import utils
 
 
 def daily_log(date):
+    utils.is_valid_date(date)
     directory_add = f'resources/{date}/add'
     directory_close = f'resources/{date}/close'
     directory_migrate = f'resources/{date}/migrate'

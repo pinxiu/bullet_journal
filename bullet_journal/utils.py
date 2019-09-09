@@ -5,6 +5,7 @@ import datetime
 import hashlib
 import os
 import random
+import re
 import string
 
 
@@ -23,6 +24,11 @@ def get_date_string(date_obj):
 def is_valid_date(date_string):
     if not date_string:
         return False
+    try:
+        datetime.datetime.strptime(date_string, '%Y_%m_%d')
+    except ValueError:
+        print("Incorrect data format, should be yyyy_mm_dd")
+        exit(1)
     return True
 
 
