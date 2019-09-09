@@ -8,6 +8,13 @@ pip3 install bullet_journal
 
 ## Usage
 
+### Show all the tasks of a specific day
+```
+bj daily_log [date]
+date: optional argument in the format of yyyy_mm_dd
+      default is today
+```
+
 ### Add to-do task
 ```
 bj add [date]
