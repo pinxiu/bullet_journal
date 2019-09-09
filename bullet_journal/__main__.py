@@ -8,7 +8,8 @@ import pkg_resources
 import sys
 
 import bullet_journal
-from bullet_journal import exceptions
+from bullet_journal import exceptions, utils
+
 
 def _registered_commands(group='bullet_journal.registered_commands'):
     registered_commands = pkg_resources.iter_entry_points(group=group)
@@ -43,6 +44,7 @@ def dispatch(argv):
 
 
 def main():
+    utils.ensure_directory('resources')
     if len(sys.argv) == 1:
         return 'Welcome to Bullet Journal Toolkit Version 0.1!'
     try:
