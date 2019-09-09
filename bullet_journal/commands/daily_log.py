@@ -7,7 +7,18 @@ from bullet_journal import utils
 
 
 def daily_log(date):
-    print(f"Showing daily log of {date}")
+    directory_add = f'resources/{date}/add'
+    directory_close = f'resources/{date}/close'
+    directory_migrate = f'resources/{date}/migrate'
+    utils.ensure_directory(directory_add)
+    utils.ensure_directory(directory_close)
+    utils.ensure_directory(directory_migrate)
+    for f in utils.loop_dir(directory_add):
+        print(f"+ {utils.read_file(directory_add, f)}")
+    for f in utils.loop_dir(directory_close):
+        print(f"x {utils.read_file(directory_close, f)}")
+    for f in utils.loop_dir(directory_migrate):
+        print(f"> {utils.read_file(directory_migrate, f)}")
 
 
 def main(args):
