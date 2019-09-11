@@ -12,7 +12,7 @@ setup(
     author_email = 'pinxiu.gong@gmail.com',
     url = 'https://github.com/pinxiu/bullet_journal',
     download_url = 'https://github.com/pinxiu/bullet_journal/archive/v_06.tar.gz',
-    keywords = ['bullet', 'journal', 'toolkit', 'command line'],
+    keywords = ['bullet', 'journal', 'toolkit', 'cli'],
     install_requires=[
         'validators',
         'beautifulsoup4',
@@ -22,9 +22,6 @@ setup(
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Build Tools',
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],
