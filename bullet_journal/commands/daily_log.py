@@ -3,14 +3,14 @@ from __future__ import unicode_literals
 
 import argparse
 
-from bullet_journal import utils
+from bullet_journal import __prefix__, utils
 
 
 def daily_log(date):
     utils.is_valid_date(date)
-    directory_add = f'resources/{date}/add'
-    directory_close = f'resources/{date}/close'
-    directory_migrate = f'resources/{date}/migrate'
+    directory_add = f'{__prefix__}/{date}/add'
+    directory_close = f'{__prefix__}/{date}/close'
+    directory_migrate = f'{__prefix__}/{date}/migrate'
     utils.ensure_directory(directory_add)
     utils.ensure_directory(directory_close)
     utils.ensure_directory(directory_migrate)

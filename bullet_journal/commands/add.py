@@ -3,12 +3,12 @@ from __future__ import unicode_literals
 
 import argparse
 
-from bullet_journal import utils
+from bullet_journal import __prefix__, utils
 
 
 def add(date):
     utils.is_valid_date(date)
-    directory = f'resources/{date}/add'
+    directory = f'{__prefix__}/{date}/add'
     utils.ensure_directory(directory)
     content = input(f"Add item to {date}: ")
     utils.write_file(directory, content)

@@ -44,7 +44,7 @@ def dispatch(argv):
 
 
 def main():
-    utils.ensure_directory('resources')
+    utils.ensure_directory(bullet_journal.__prefix__)
     if len(sys.argv) == 1:
         return f'Welcome to Bullet Journal Toolkit Version {bullet_journal.__version__}!'
     try:
