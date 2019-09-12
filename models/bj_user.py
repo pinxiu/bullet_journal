@@ -1,3 +1,4 @@
+import binascii
 import hashlib
 import os
 
@@ -21,11 +22,13 @@ class BjUser(db.Model):
 		self.access_token = access_token
 
 
-	def has_username(username):
+	@classmethod
+	def has_username(self, username):
 		return db.session.query(BjUser.id).filter_by(username=username).scalar() is not None
 
 
-	def get_user(username, password):
+	@classmethod
+	def get_user(self, username, password):
 		access_token = hmac(username, password)
 		bj_user = db.session.query(BjUser) \
 							.filter_by(username=username) \
@@ -37,7 +40,8 @@ class BjUser(db.Model):
 			return bj_user.id, access_token
 
 
-	def add_user(username, password):
+	@classmethod
+	def add_user(self, username, password):
 		access_token = hmac(username, password)
 		bj_user = BjUser(
 			username=username,
@@ -45,14 +49,18 @@ class BjUser(db.Model):
 		)
 		db.session.add(bj_user)
 		db.session.commit()
+		return bj_user.id, access_token
 
 
-	def get_token_by_user_id(user_id):
-		return BjUser.query(BjUser.access_token).filter_by(user_id=user_id).first()
+	@classmethod
+	def get_token_by_user_id(self, user_id):
+		return db.session.query(BjUser.access_token).filter_by(id=user_id).scalar()
 
 
-	def hmac(username, password):
-		message_raw = f'username: {username}, password: {password}'
-		message = hashlib.sha512().update(message_raw.encode()).hexdigest()
-		dk = hashlib.pbkdf2_hmac('sha256', message.encode(), secret.encode(), 100000)
-		return binascii.hexlify(dk).decode('utf-8')
+def hmac(username, password):
+	message_raw = f'username: {username}, password: {password}'
+	sha = hashlib.sha512()
+	sha.update(message_raw.encode())
+	message = sha.hexdigest()
+	dk = hashlib.pbkdf2_hmac('sha256', message.encode(), secret.encode(), 100000)
+	return binascii.hexlify(dk).decode('utf-8')
