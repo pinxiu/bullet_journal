@@ -9,6 +9,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['REDIS_URL']
 db = SQLAlchemy(app)
 
+
 from models import BjRecord, BjUser
 
 
