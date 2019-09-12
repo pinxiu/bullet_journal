@@ -3,12 +3,12 @@ import os
 
 from app import db
 
-from .base import Base, create_uuid_string, UUID_LENGTH
+from .base import create_uuid_string, UUID_LENGTH
 
 secret = os.environ['BJ_SECRET']
 
 
-class BjUser:
+class BjUser(db.Model):
 	__tablename__ = 'bj_user'
 
 	id = db.Column(db.String(UUID_LENGTH), primary_key=True, default=create_uuid_string)
@@ -27,9 +27,9 @@ class BjUser:
 
 	def get_user(username, password):
 		access_token = hmac(username, password)
-		bj_user = db.session.query(BjUser)
-							.filter_by(username=username)
-							.filter_by(access_token=access_token)
+		bj_user = db.session.query(BjUser) \
+							.filter_by(username=username) \
+							.filter_by(access_token=access_token) \
 							.scalar()
 		if not bj_user:
 			return None, None
