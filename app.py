@@ -3,13 +3,13 @@ import os
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 
-from models import BjRecord, BjUser
-
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['REDIS_URL']
 db = SQLAlchemy(app)
+
+from models import BjRecord, BjUser
 
 
 BJ_REQUEST_ORIGIN_LIST = {
