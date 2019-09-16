@@ -8,7 +8,7 @@ from bullet_journal import __prefix__, utils
 
 def delete(date):
     utils.is_valid_date(date)
-    directory_add = f'{__prefix__}/{date}/add'
+    directory_add = f'{__prefix__}/resources/{date}/add'
     utils.ensure_directory(directory_add)
     records = list()
     print(f"Active items in {date}:")

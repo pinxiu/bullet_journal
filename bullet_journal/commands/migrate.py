@@ -8,8 +8,8 @@ from bullet_journal import __prefix__, utils
 
 def migrate(date):
     utils.is_valid_date(date)
-    directory_add = f'{__prefix__}/{date}/add'
-    directory_migrate = f'{__prefix__}/{date}/migrate'
+    directory_add = f'{__prefix__}/resources/{date}/add'
+    directory_migrate = f'{__prefix__}/resources/{date}/migrate'
     utils.ensure_directory(directory_add)
     utils.ensure_directory(directory_migrate)
     records = list()
@@ -35,7 +35,7 @@ def migrate(date):
     if not utils.is_valid_date(dst_date):
         dst_date = utils.tomorrow()
         print(f"Migrated item to default date: {dst_date}")
-    directory_dst = f'{__prefix__}/{dst_date}/add'
+    directory_dst = f'{__prefix__}/resources/{dst_date}/add'
     utils.ensure_directory(directory_dst)
     utils.write_file(directory_dst, utils.read_file(directory_migrate, file_name))
 

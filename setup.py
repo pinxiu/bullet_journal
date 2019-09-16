@@ -14,8 +14,7 @@ setup(
     download_url = 'https://github.com/pinxiu/bullet_journal/archive/v_06.tar.gz',
     keywords = ['bullet', 'journal', 'toolkit', 'cli'],
     install_requires=[
-        'validators',
-        'beautifulsoup4',
+        'pycrypto',
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
@@ -32,6 +31,8 @@ setup(
             'delete = bullet_journal.commands.delete:main',
             'migrate = bullet_journal.commands.migrate:main',
             'daily_log = bullet_journal.commands.daily_log:main',
+            'push = bullet_journal.commands.push:main',
+            'pull = bullet_journal.commands.pull:main',
         ],
         'console_scripts': [
             'bj = bullet_journal.__main__:main',

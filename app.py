@@ -75,9 +75,6 @@ def access(user_id):
 	if not has_access(user_id, request.headers):
 		return '', 401
 
-	if not request.data:
-		return '', 400
-
 	bj_record = db.session.query(BjRecord).filter_by(user_id=user_id).scalar()
 
 	if not bj_record:
@@ -85,6 +82,9 @@ def access(user_id):
 
 	if request.method == 'GET':
 		return bj_record.data, 200
+
+	if not request.data:
+		return '', 400
 
 	bj_record.data = request.data
 	db.session.commit()

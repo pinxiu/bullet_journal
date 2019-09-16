@@ -8,8 +8,8 @@ from bullet_journal import __prefix__, utils
 
 def close(date):
     utils.is_valid_date(date)
-    directory_add = f'{__prefix__}/{date}/add'
-    directory_close = f'{__prefix__}/{date}/close'
+    directory_add = f'{__prefix__}/resources/{date}/add'
+    directory_close = f'{__prefix__}/resources/{date}/close'
     utils.ensure_directory(directory_add)
     utils.ensure_directory(directory_close)
     records = list()

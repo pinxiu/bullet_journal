@@ -1,12 +1,18 @@
 from __future__ import absolute_import, division, print_function
 from __future__ import unicode_literals
 
+import base64
 import datetime
 import hashlib
+import json
 import os
 import random
 import re
 import string
+
+from Crypto.Cipher import AES
+
+import bullet_journal
 
 
 def today():
@@ -73,3 +79,33 @@ def get_hash(content):
 
 def loop_dir(directory):
     return [f for f in os.listdir(directory) if not f.startswith('.')]
+
+
+def validate_auth():
+    if not os.path.exists(f'{bullet_journal.__prefix__}/credentials'):
+        print("Please log in.")
+        exit(1)
+
+
+def get_access_token():
+    with open(f'{bullet_journal.__prefix__}/credentials') as f:
+        credentials = json.loads(f.read())
+    return credentials['access_token']
+
+def get_user_id():
+    with open(f'{bullet_journal.__prefix__}/credentials') as f:
+        credentials = json.loads(f.read())
+    return credentials['user_id']
+
+
+def encrypt(msg_text):
+    secret_key = get_hash(get_access_token())
+    cipher = AES.new(secret_key, AES.MODE_ECB)
+    msg_text += ' ' * (16 - len(msg_text) % 16)
+    return base64.b64encode(cipher.encrypt(msg_text.encode("utf-8")))
+
+
+def decrypt(msg_text):
+    secret_key = get_hash(get_access_token())
+    cipher = AES.new(secret_key, AES.MODE_ECB)
+    return cipher.decrypt(baes64.b64decode(msg_text)).decode("utf-8").strip()

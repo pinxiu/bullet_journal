@@ -8,9 +8,9 @@ from bullet_journal import __prefix__, utils
 
 def daily_log(date):
     utils.is_valid_date(date)
-    directory_add = f'{__prefix__}/{date}/add'
-    directory_close = f'{__prefix__}/{date}/close'
-    directory_migrate = f'{__prefix__}/{date}/migrate'
+    directory_add = f'{__prefix__}/resources/{date}/add'
+    directory_close = f'{__prefix__}/resources/{date}/close'
+    directory_migrate = f'{__prefix__}/resources/{date}/migrate'
     utils.ensure_directory(directory_add)
     utils.ensure_directory(directory_close)
     utils.ensure_directory(directory_migrate)
