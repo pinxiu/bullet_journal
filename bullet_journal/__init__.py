@@ -2,7 +2,7 @@ import os
 
 __title__ = "bullet_journal"
 
-__version__ = "0.7"
+__version__ = "0.8"
 
 __prefix__ = os.environ['HOME'] + "/.bj"
 
