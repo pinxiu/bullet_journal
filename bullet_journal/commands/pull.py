@@ -32,7 +32,7 @@ def pull():
             leaf_directory = f'{root_directory}/{date}/{operation}'
             utils.ensure_directory(leaf_directory)
             for f in backup[date][operation]:
-                utils.write_file(leaf_directory, backup[date][operation][filename], file_name=f)
+                utils.write_file(leaf_directory, backup[date][operation][f], file_name=f)
 
 
 def main(args):

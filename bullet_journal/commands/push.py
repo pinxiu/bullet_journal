@@ -20,7 +20,7 @@ def push():
             backup[date][operation] = dict()
             leaf_directory = f'{root_directory}/{date}/{operation}'
             for f in utils.loop_dir(leaf_directory):
-                backup[date][operation][filename] = utils.read_file(leaf_directory, f)
+                backup[date][operation][f] = utils.read_file(leaf_directory, f)
     encrypted_text = utils.encrypt(json.dumps(backup))
     response = requests.put(
         f'{__host__}/{user_id}',
