@@ -8,6 +8,7 @@ import json
 import os
 import random
 import re
+import shutil
 import string
 
 from Crypto.Cipher import AES
@@ -43,8 +44,10 @@ def ensure_directory(dir_name):
         os.makedirs(dir_name)
 
 
-def write_file(directory, content):
-    with open(f'{directory}/{get_hash(content)}', 'w') as f:
+def write_file(directory, content, file_name=None):
+    if not file_name:
+        file_name = get_hash(content)
+    with open(f'{directory}/{file_name}', 'w') as f:
         f.write(content)
 
 
@@ -70,15 +73,20 @@ def random_string(string_length=32):
     return ''.join(random.choice(letters) for i in range(string_length))
 
 
-def get_hash(content):
+def get_hash(content, random=True):
     sha = hashlib.sha256()
     sha.update(content.encode())
-    sha.update(random_string().encode())
+    if random:
+        sha.update(random_string().encode())
     return sha.hexdigest()[:32]
 
 
 def loop_dir(directory):
     return [f for f in os.listdir(directory) if not f.startswith('.')]
+
+
+def cleanup():
+    shutil.rmtree(f'{bullet_journal.__prefix__}/resources')
 
 
 def validate_auth():
@@ -99,13 +107,13 @@ def get_user_id():
 
 
 def encrypt(msg_text):
-    secret_key = get_hash(get_access_token())
+    secret_key = get_hash(get_access_token(), random=False)
     cipher = AES.new(secret_key, AES.MODE_ECB)
     msg_text += ' ' * (16 - len(msg_text) % 16)
-    return base64.b64encode(cipher.encrypt(msg_text.encode("utf-8")))
+    return base64.b64encode(cipher.encrypt(msg_text.encode("utf-8"))).hex()
 
 
 def decrypt(msg_text):
-    secret_key = get_hash(get_access_token())
+    secret_key = get_hash(get_access_token(), random=False)
     cipher = AES.new(secret_key, AES.MODE_ECB)
-    return cipher.decrypt(baes64.b64decode(msg_text)).decode("utf-8").strip()
+    return cipher.decrypt(base64.b64decode(bytes.fromhex(msg_text))).decode("utf-8").strip()

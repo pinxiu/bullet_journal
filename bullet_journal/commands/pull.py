@@ -23,19 +23,17 @@ def pull():
         print("Successfully pulled bullet journal from remote server.")
     else:
         print("Something went wrong.")
-    decrypted_text = utils.decrypt(json.dumps(response.text))
-    print(decrypted_text)
-
-    # root_directory = f'{__prefix__}/resources'
-    # utils.ensure_directory(root_directory)
-    # backup = dict()
-    # for date in utils.loop_dir(root_directory):
-    #     backup[date] = dict()
-    #     for operation in utils.loop_dir(f'{root_directory}/{date}'):
-    #         backup[date][operation] = dict()
-    #         leaf_directory = f'{root_directory}/{date}/{operation}'
-    #         for f in utils.loop_dir(leaf_directory):
-    #             backup[date][operation][filename] = utils.read_file(leaf_directory, f)
+    backup = json.loads(utils.decrypt(response.text))
+    utils.cleanup()
+    root_directory = f'{__prefix__}/resources'
+    utils.ensure_directory(root_directory)
+    for date in backup:
+        utils.ensure_directory(f'{root_directory}/{date}')
+        for operation in backup[date]:
+            leaf_directory = f'{root_directory}/{date}/{operation}'
+            utils.ensure_directory(leaf_directory)
+            for f in backup[date][operation]:
+                utils.write_file(leaf_directory, backup[date][operation][filename], file_name=f)
 
 
 def main(args):
