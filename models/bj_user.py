@@ -6,7 +6,7 @@ from app import db
 
 from .base import create_uuid_string, UUID_LENGTH
 
-secret = os.environ['BJ_SECRET']
+server_secret = os.environ['BJ_SECRET']
 
 
 class BjUser(db.Model):
@@ -29,38 +29,48 @@ class BjUser(db.Model):
 
 	@classmethod
 	def get_user(self, username, password):
-		access_token = hmac(username, password)
+		server_access_token, user_access_token = hmac(username, password)
 		bj_user = db.session.query(BjUser) \
 							.filter_by(username=username) \
-							.filter_by(access_token=access_token) \
+							.filter_by(access_token=server_access_token) \
 							.scalar()
 		if not bj_user:
 			return None, None
 		else:
-			return bj_user.id, access_token
+			return bj_user.id, user_access_token
 
 
 	@classmethod
 	def add_user(self, username, password):
-		access_token = hmac(username, password)
+		server_access_token, user_access_token = hmac(username, password)
 		bj_user = BjUser(
 			username=username,
-			access_token=access_token
+			access_token=server_access_token
 		)
 		db.session.add(bj_user)
 		db.session.commit()
-		return bj_user.id, access_token
+		return bj_user.id, user_access_token
 
 
 	@classmethod
-	def get_token_by_user_id(self, user_id):
-		return db.session.query(BjUser.access_token).filter_by(id=user_id).scalar()
+	def validate_token(self, user_id, user_access_token):
+		server_access_token = db.session.query(BjUser.access_token).filter_by(id=user_id).scalar()
+		return server_access_token == get_hmac(user_access_token)
 
 
 def hmac(username, password):
 	message_raw = f'username: {username}, password: {password}'
+	user_access_token = get_hash(message_raw)
+	server_access_token = get_hmac(user_access_token)
+	return server_access_token, user_access_token
+
+
+def get_hash(secret):
 	sha = hashlib.sha512()
-	sha.update(message_raw.encode())
-	message = sha.hexdigest()
-	dk = hashlib.pbkdf2_hmac('sha256', message.encode(), secret.encode(), 100000)
+	sha.update(secret.encode())
+	return sha.hexdigest()
+
+
+def get_hmac(secret):
+	dk = hashlib.pbkdf2_hmac('sha256', secret.encode(), server_secret.encode(), 100000)
 	return binascii.hexlify(dk).decode('utf-8')

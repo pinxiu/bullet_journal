@@ -70,8 +70,13 @@ def login():
 
 @app.route('/<user_id>', methods = ['GET', 'PUT'])
 def access(user_id):
+	if not is_bj_header(request.headers):
+		return '', 401
 	if not has_access(user_id, request.headers):
 		return '', 401
+
+	if not request.data:
+		return '', 400
 
 	bj_record = db.session.query(BjRecord).filter_by(user_id=user_id).scalar()
 
@@ -79,9 +84,9 @@ def access(user_id):
 		return '', 404
 
 	if request.method == 'GET':
-		return bj_record, 200
+		return bj_record.data, 200
 
-	bj_record.data = data
+	bj_record.data = request.data
 	db.session.commit()
 	return '', 204
 
@@ -90,8 +95,7 @@ def has_access(user_id, headers):
 	access_token = headers.get('BJ_SERVER_ACCESS_TOKEN')
 	if not access_token:
 		return False
-	server_token = BjUser.get_token_by_user_id(user_id)
-	return server_token == access_token
+	return BjUser.validate_token(user_id, access_token)
 
 
 def is_bj_header(headers):
