@@ -91,7 +91,7 @@ def cleanup():
 
 def validate_auth():
     if not os.path.exists(f'{bullet_journal.__prefix__}/credentials'):
-        print("Please log in.")
+        print("User is not logged in.")
         exit(1)
 
 

@@ -33,6 +33,9 @@ setup(
             'daily_log = bullet_journal.commands.daily_log:main',
             'push = bullet_journal.commands.push:main',
             'pull = bullet_journal.commands.pull:main',
+            'signup = bullet_journal.commands.signup:main',
+            'login = bullet_journal.commands.login:main',
+            'logout = bullet_journal.commands.logout:main',
         ],
         'console_scripts': [
             'bj = bullet_journal.__main__:main',

@@ -33,7 +33,7 @@ def signup():
 	username = request.form.get('username')
 	password = request.form.get('hashed-password')
 	if not username or not password:
-		return '', 400
+		return '', 500
 	if BjUser.has_username(username):
 		return '', 400
 	user_id, access_token = BjUser.add_user(username, password)
@@ -46,7 +46,7 @@ def signup():
 	return jsonify(
 		user_id=user_id,
 		access_token=access_token,
-	)
+	), 200
 
 
 @app.route('/login', methods = ['POST'])
@@ -56,7 +56,7 @@ def login():
 	username = request.form.get('username')
 	password = request.form.get('hashed-password')
 	if not username or not password:
-		return '', 400
+		return '', 401
 	if not BjUser.has_username(username):
 		return '', 401
 	user_id, access_token = BjUser.get_user(username, password)
@@ -65,7 +65,7 @@ def login():
 	return jsonify(
 		user_id=user_id,
 		access_token=access_token,
-	)
+	), 200
 
 
 @app.route('/<user_id>', methods = ['GET', 'PUT'])
