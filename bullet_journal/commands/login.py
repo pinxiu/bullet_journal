@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 import os
 import getpass
 import json
+
 import requests
 
 from bullet_journal import __host__, __prefix__, utils

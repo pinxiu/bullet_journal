@@ -15,6 +15,7 @@ setup(
     keywords = ['bullet', 'journal', 'toolkit', 'cli'],
     install_requires=[
         'pycrypto',
+        'requests',
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
