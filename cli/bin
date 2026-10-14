@@ -1,0 +1,1 @@
+complete -W "add help daily_log code update_bin close sort migrate" bullet

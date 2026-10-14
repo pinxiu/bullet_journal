@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo
+cat $bullet_prefix/resources/README.md
+echo

@@ -1,0 +1,30 @@
+#!/bin/sh
+
+if [ $# -eq 0 ]
+then
+    day="$(date +'%Y_%m_%d')"
+else
+	if [ $1 = "-h" ]
+	then
+		echo "Usage: bullet close [YYYY_MM_DD]"
+		exit 0
+	fi
+    day=$1
+fi
+
+file="$bullet_prefix/resources/daily_log/$day"
+if [ -f "$file" ]
+then
+	echo
+	echo $file
+    cat -n $file
+    echo
+else
+    echo "$file does not exist."
+    exit 1
+fi
+
+read -p "Index of item to close: "  index
+# add check to validate line
+sed -i '' $index"s/[o+]/x/" $file
+sort -n $file > tmp && mv tmp $file

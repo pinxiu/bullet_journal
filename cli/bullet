@@ -1,0 +1,43 @@
+#!/bin/sh
+
+export bullet_prefix="${bullet_prefix:-/path/to/dir/bullet_notebook}"
+
+if [ $# -eq 0 ]
+then
+    $bullet_prefix/help
+else
+	case $1 in
+		"help")
+			$bullet_prefix/help
+			;;
+		"add")
+			shift
+			$bullet_prefix/add $@
+			;;
+		"close")
+			shift
+			$bullet_prefix/close $@
+			;;
+		"migrate")
+			shift
+			$bullet_prefix/migrate $@
+			;;
+		"sort")
+			shift
+			$bullet_prefix/sort $@
+			;;
+		"daily_log")
+			shift
+			$bullet_prefix/daily_log $@
+			;;
+		"code")
+			subl $bullet_prefix
+			;;
+		"update_bin")
+			cp $bullet_prefix/bin /usr/local/etc/bash_completion.d/bullet
+			;;
+		*)
+			$bullet_prefix/help
+			;;
+	esac
+fi
